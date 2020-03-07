@@ -8,9 +8,11 @@ static size_t max_size = 0;
 
 void makeAllocator(size_t maxSize)
 {
+    // проверяем, нет ли уже аллоцированный памяти, если есть -- возвращаем её ОС
     if (mem_start_ptr != nullptr)
         free(mem_start_ptr);
         
+    // берём у ОС памяти
     max_size = maxSize;
     mem_start_ptr = malloc(max_size);
     using_size = 0;
@@ -18,7 +20,7 @@ void makeAllocator(size_t maxSize)
 }
 char* alloc(size_t size)
 {
-
+    // Выдаём указатель пользователю
    void* ret = nullptr;
 
    if(max_size >= using_size+ size)
@@ -34,6 +36,7 @@ char* alloc(size_t size)
 
 void reset()
 {
+    // откатываемся на начало аллоцированный памяти
 
     using_size = 0;
     

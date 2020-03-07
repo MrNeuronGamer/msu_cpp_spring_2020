@@ -9,5 +9,5 @@ allocator.o: allocator.cpp allocator.hpp
 
 test_allocator.o: test_allocator.cpp allocator.hpp
 	$(CC) $(STANDART) -c -O0 test_allocator.cpp allocator.hpp
-clean :
+clean:
 	rm test_allocator.o allocator.o

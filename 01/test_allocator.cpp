@@ -26,31 +26,33 @@ void Test_1()
 
 
     bool flag = false;
-
+// тестим адекватность получаемых после записи данных
     flag = buffs[2] == nullptr;
     flag = flag && (*buffs[0] == 'a');
     flag = flag && (*(buffs[0]+1) == 'b');
     flag = flag && (*buffs[1] == 'c');
 
     reset();
+
+    //проверяем переиспользование памяти
     
     buffs[0] = alloc(2);
     buffs[1] = alloc(1);
     buffs[2] = alloc(1);
 
-    *buffs[0] = 'a';
-    *(buffs[0]+1) = 'b';
-    *buffs[1] = 'c';
+    *buffs[0] = 'k';
+    *(buffs[0]+1) = 'f';
+    *buffs[1] = 'e';
 
 
 
     flag = flag && (buffs[2] == nullptr);
-    flag = flag && (*buffs[0] == 'a');
-    flag = flag && (*(buffs[0]+1) == 'b');
-    flag = flag && (*buffs[1] == 'c');
+    flag = flag && (*buffs[0] == 'k');
+    flag = flag && (*(buffs[0]+1) == 'f');
+    flag = flag && (*buffs[1] == 'e');
 
 
-
+    // реаллоцируем память для большего вмещения и проверяем данные
     makeAllocator(4);
 
     buffs[0] = alloc(2);

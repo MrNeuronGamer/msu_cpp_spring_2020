@@ -63,7 +63,7 @@ void Test_1()
     *buffs[2] = 'd';
 
 
-    flag = *buffs[2] == 'd';
+    flag = flag && (*buffs[2] == 'd');
     flag = flag && (*buffs[0] == 'a');
     flag = flag && (*(buffs[0]+1) == 'b');
     flag = flag && (*buffs[1] == 'c');

@@ -8,6 +8,8 @@ static size_t max_size = 0;
 
 void makeAllocator(size_t maxSize)
 {
+    using_size = 0;
+    max_size = 0;
     // проверяем, нет ли уже аллоцированный памяти, если есть -- возвращаем её ОС
     if (mem_start_ptr != nullptr)
         free(mem_start_ptr);
@@ -15,6 +17,8 @@ void makeAllocator(size_t maxSize)
     // берём у ОС памяти
     max_size = maxSize;
     mem_start_ptr = malloc(max_size);
+    if (!mem_start_ptr) max_size = 0;
+
     using_size = 0;
 
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "allocator.hpp"
 using namespace std;
 
@@ -79,6 +78,26 @@ void Test_1()
 
 }
 
+void Test_2()
+{
+
+    bool flag = alloc(1)== nullptr;
+
+    makeAllocator(1000000000000);
+    flag = flag && ( ((void*)alloc(1)) == (malloc (1000000000000)) );
+
+    makeAllocator(34);
+
+    flag == flag && ((void*)alloc(3) != nullptr);
+
+
+
+    if (flag)
+        cout << "Test_2 : 1" <<endl;
+    else 
+        cout << "Test_2 : 0" << endl;
+
+}
 
 
 
@@ -87,6 +106,10 @@ int main()
 {
 
     
+    Test_1();
+    cout << "\n\n";
+    Test_2();
+    cout << "\n\n";
     Test_1();
 
     return 0;

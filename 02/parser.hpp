@@ -7,7 +7,7 @@ class Parser
 {
 
     using on_num    = void(*)(const int& Num);
-    using on_str    = void(*)(const char* str);
+    using on_str    = void(*)(const std::string& str);
     using on_begin  = void(*)();
     using on_end    = void(*)();
 

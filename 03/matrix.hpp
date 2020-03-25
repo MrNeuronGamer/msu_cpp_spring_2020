@@ -7,9 +7,10 @@ class Row
 
 public:
     Row(size_t cols);
-    bool operator==(Row &other) const;
+    bool operator==(const Row &other) const;
     void operator*=(int mult);
     int &operator[](const size_t i_col);
+    const int &operator[](const size_t i_col) const;
     Row &operator=(Row &other);
     size_t getColumns() const;
     ~Row();
@@ -31,7 +32,7 @@ public:
     size_t getRows() const;
     Matrix& operator*=(int mult);
     Row &operator[](const size_t i_row);
-    Row &operator[](const size_t i_row) const;
+    const Row &operator[](const size_t i_row) const;
     bool operator==(const Matrix &other) const;
     bool operator!=(const Matrix &other) const;
     ~Matrix();

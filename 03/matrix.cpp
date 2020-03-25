@@ -24,7 +24,7 @@ Row &Row::operator=(Row &other)
     }
 }
 
-bool Row::operator==(Row &other) const
+bool Row::operator==(const Row &other) const
 {
     for (size_t i = 0; i < n_cols; i++)
         if (elems[i] != other[i])
@@ -38,6 +38,14 @@ void Row::operator*=(int mult)
         elems[i] *= mult;
 }
 int &Row::operator[](const size_t i_col)
+{
+
+    if (i_col >= n_cols)
+        throw std::out_of_range("");
+
+    return elems[i_col];
+}
+const int &Row::operator[](const size_t i_col) const
 {
 
     if (i_col >= n_cols)
@@ -95,7 +103,7 @@ Row &Matrix::operator[](const size_t i_row)
         throw std::out_of_range("");
     return Rows[i_row];
 }
-Row &Matrix::operator[](const size_t i_row) const
+const Row &Matrix::operator[](const size_t i_row) const
 {
     if (i_row >= n_rows)
         throw std::out_of_range("");

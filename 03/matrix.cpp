@@ -1,5 +1,6 @@
 #include "matrix.hpp"
 #include <iostream>
+#include <new>
 
 Row::Row(size_t cols)
 {
@@ -60,7 +61,8 @@ Matrix::Matrix(const size_t rows, const size_t cols)
     n_cols = cols;
     n_rows = rows;
     Row a(cols);
-    Rows = new Row[rows];
+    Row t[rows];
+    Rows = new (&t) Row[rows];
 
     for (size_t i = 0; i < rows; i++)
     {
@@ -82,10 +84,11 @@ size_t Matrix::getRows() const
 {
     return n_rows;
 }
-void Matrix::operator*=(int mult)
+Matrix& Matrix::operator*=(int mult)
 {
     for (size_t i = 0; i < n_rows; i++)
         Rows[i] *= mult;
+    return *this;
 }
 Row &Matrix::operator[](const size_t i_row)
 {

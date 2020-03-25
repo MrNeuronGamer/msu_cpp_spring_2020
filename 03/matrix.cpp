@@ -61,8 +61,7 @@ Matrix::Matrix(const size_t rows, const size_t cols)
     n_cols = cols;
     n_rows = rows;
     Row a(cols);
-    Row t[rows];
-    Rows = new (&t) Row[rows];
+    Rows = new  Row[rows];
 
     for (size_t i = 0; i < rows; i++)
     {

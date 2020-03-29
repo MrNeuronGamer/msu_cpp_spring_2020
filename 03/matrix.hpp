@@ -30,7 +30,7 @@ public:
     Matrix(const size_t rows, const size_t cols);
     size_t getColumns() const;
     size_t getRows() const;
-    Matrix& operator*=(int mult);
+    Matrix &operator*=(int mult);
     Row &operator[](const size_t i_row);
     const Row &operator[](const size_t i_row) const;
     bool operator==(const Matrix &other) const;

@@ -68,13 +68,10 @@ Matrix::Matrix(const size_t rows, const size_t cols)
 
     n_cols = cols;
     n_rows = rows;
-    Row a(cols);
-    Rows = new  Row[rows];
-
+    Rows = new Row[rows];
     for (size_t i = 0; i < rows; i++)
     {
-
-        Rows[i] = a;
+        new (Rows + i) Row(cols);
     }
 }
 
@@ -91,7 +88,7 @@ size_t Matrix::getRows() const
 {
     return n_rows;
 }
-Matrix& Matrix::operator*=(int mult)
+Matrix &Matrix::operator*=(int mult)
 {
     for (size_t i = 0; i < n_rows; i++)
         Rows[i] *= mult;

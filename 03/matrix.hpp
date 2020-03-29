@@ -11,16 +11,15 @@ public:
     void operator*=(int mult);
     int &operator[](const size_t i_col);
     const int &operator[](const size_t i_col) const;
-    Row &operator=(Row &other);
+    Row &operator=(const Row &other);
     size_t getColumns() const;
     ~Row();
 
-private:
+
     Row();
     int *elems = nullptr;
     size_t n_cols = 0;
 
-    friend class Matrix;
 };
 
 class Matrix

@@ -12,7 +12,7 @@ Row::~Row()
 {
     delete[] elems;
 }
-Row &Row::operator=(Row &other)
+Row &Row::operator=(const Row &other)
 {
     n_cols = other.getColumns();
     elems = new int[n_cols];
@@ -68,10 +68,11 @@ Matrix::Matrix(const size_t rows, const size_t cols)
 
     n_cols = cols;
     n_rows = rows;
+    Row a(cols);
     Rows = new Row[rows];
     for (size_t i = 0; i < rows; i++)
     {
-        new (Rows + i) Row(cols);
+        Rows[i] = a;
     }
 }
 

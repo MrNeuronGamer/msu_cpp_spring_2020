@@ -68,17 +68,20 @@ Matrix::Matrix(const size_t rows, const size_t cols)
 
     n_cols = cols;
     n_rows = rows;
-    Row a(cols);
-    Rows = new Row[rows];
-    for (size_t i = 0; i < rows; i++)
-    {
-        Rows[i] = a;
-    }
+    Rows = (Row*)new char [sizeof(Row)*rows];
+    
+    for (size_t i = 0 ; i < cols ; ++i)
+        new (Rows + i ) Row(cols);
+    
+
+
 }
 
 Matrix::~Matrix()
 {
-    delete[] Rows;
+    for (size_t i = 0; i < n_cols; ++i)
+        (Rows + i) ->~Row();
+    delete [] (char*)Rows;
 }
 
 size_t Matrix::getColumns() const

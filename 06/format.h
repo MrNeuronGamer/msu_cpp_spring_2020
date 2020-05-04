@@ -2,23 +2,22 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <exception> 
+#include <exception>
 #include <iostream>
 
-
-template<class T>
-std::string to_str(T&& val)
+template <class T>
+std::string to_str(T &&val)
 {
 	std::stringstream str;
 	str << val;
 	return str.str();
 }
 
-template<class... Args>
-std::string format(const std::string& str,Args&&... args)
+template <class... Args>
+std::string format(const std::string &str, Args &&... args)
 {
 	std::string res, buf;
-	std::vector<std::string> new_arg = { to_str(std::forward<Args>(args))... };
+	std::vector<std::string> new_arg = {to_str(std::forward<Args>(args))...};
 	size_t len = str.size();
 	size_t arg_len = new_arg.size();
 
@@ -47,7 +46,7 @@ std::string format(const std::string& str,Args&&... args)
 				continue;
 			}
 		}
-		else if(is_open)
+		else if (is_open)
 		{
 			if (std::isdigit(c))
 			{
@@ -60,7 +59,7 @@ std::string format(const std::string& str,Args&&... args)
 				{
 					throw std::runtime_error("argument number not specified");
 				}
-				else if (atoi(buf.c_str()) >= arg_len || atoi(buf.c_str())<0)
+				else if (atoi(buf.c_str()) >= arg_len || atoi(buf.c_str()) < 0)
 				{
 					throw std::runtime_error("argument not declared");
 				}
@@ -77,7 +76,6 @@ std::string format(const std::string& str,Args&&... args)
 			{
 				throw std::runtime_error("error when calling argument");
 			}
-
 		}
 		else
 		{

@@ -10,41 +10,39 @@ enum class Error
 	CorruptedArchive
 };
 
-
 class Serializer
 {
-	
-	static constexpr char Separator = ' ';
-	std::ostream& out_;
-public:
 
-	explicit Serializer(std::ostream& out)
-	: out_(out)
+	static constexpr char Separator = ' ';
+	std::ostream &out_;
+
+public:
+	explicit Serializer(std::ostream &out)
+		: out_(out)
 	{
 	}
 
 	template <class T>
-	Error save(T& object)
+	Error save(T &object)
 	{
 		return object.serialize(*this);
 	}
 
 	template <class... ArgsT>
-	Error operator()(ArgsT&&... args)
+	Error operator()(ArgsT &&... args)
 	{
 		return process(std::forward<ArgsT>(args)...);
 	}
 
 private:
-    
 	template <class T>
-	Error process(T&& arg) 
+	Error process(T &&arg)
 	{
 		return saveStream(std::forward<T>(arg));
 	}
-	    
+
 	template <class T, class... ArgsT>
-	Error process(T&& arg, ArgsT&&... args) 
+	Error process(T &&arg, ArgsT &&... args)
 	{
 		if (saveStream(std::forward<T>(arg)) != Error::NoError)
 		{
@@ -52,7 +50,7 @@ private:
 		}
 		return process(std::forward<ArgsT>(args)...);
 	}
-		
+
 	template <class T>
 	Error saveStream(T val)
 	{
@@ -81,28 +79,29 @@ private:
 
 class Deserializer
 {
-	std::istream& in_;
+	std::istream &in_;
+
 public:
-	explicit Deserializer(std::istream& in)
-	: in_(in)
+	explicit Deserializer(std::istream &in)
+		: in_(in)
 	{
 	}
 
 	template <class T>
-	Error load(T& object)
+	Error load(T &object)
 	{
 		return object.deserialize(*this);
 	}
 
 	template <class... ArgsT>
-	Error operator()(ArgsT&&... args)
+	Error operator()(ArgsT &&... args)
 	{
 		return process(std::forward<ArgsT>(args)...);
 	}
-private:
 
+private:
 	template <class T>
-	Error loadStream(T& val)
+	Error loadStream(T &val)
 	{
 		std::string str;
 		in_ >> str;
@@ -112,11 +111,11 @@ private:
 			{
 				val = true;
 			}
-			else if(str == "false")
+			else if (str == "false")
 			{
 				val = false;
 			}
-			else 
+			else
 			{
 				return Error::CorruptedArchive;
 			}
@@ -128,7 +127,7 @@ private:
 			if (str.length() == 0)
 			{
 				return Error::CorruptedArchive;
-			}		
+			}
 			for (size_t i = 0; i < str.length(); ++i)
 			{
 				if (!(isdigit(str[i])))
@@ -138,20 +137,19 @@ private:
 			}
 			val = std::stoi(str);
 			return Error::NoError;
-
 		}
 
 		return Error::CorruptedArchive;
 	}
 
 	template <class T>
-	Error process(T&& arg) 
+	Error process(T &&arg)
 	{
 		return loadStream(std::forward<T>(arg));
 	}
 
 	template <class T, class... ArgsT>
-	Error process(T&& arg, ArgsT&&... args) 
+	Error process(T &&arg, ArgsT &&... args)
 	{
 		if (loadStream(std::forward<T>(arg)) != Error::NoError)
 		{

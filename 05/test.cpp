@@ -2,7 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
-std::string toString(const BigInt& value)
+std::string toString(const BigInt &value)
 {
     std::stringstream buf;
     buf << value;
@@ -25,7 +25,7 @@ void check(int64_t x, int64_t y)
     }
 }
 
-void doCheckEqual(const BigInt& actual, const char* expected, size_t line)
+void doCheckEqual(const BigInt &actual, const char *expected, size_t line)
 {
     const auto str = toString(actual);
     if (str != expected)
@@ -34,9 +34,17 @@ void doCheckEqual(const BigInt& actual, const char* expected, size_t line)
     }
 }
 
-#define checkEqual(x, y) do { doCheckEqual((x), (y), __LINE__); } while(0)
-#define checkTrue(cond) do { if (!(cond)) std::cout << "at line " << __LINE__ << ": " << #cond << '\n'; } while(0)
-
+#define checkEqual(x, y)                  \
+    do                                    \
+    {                                     \
+        doCheckEqual((x), (y), __LINE__); \
+    } while (0)
+#define checkTrue(cond)                                                   \
+    do                                                                    \
+    {                                                                     \
+        if (!(cond))                                                      \
+            std::cout << "at line " << __LINE__ << ": " << #cond << '\n'; \
+    } while (0)
 
 int main()
 {
@@ -94,13 +102,13 @@ int main()
     checkEqual(BigInt(-10) - BigInt(10), "-20");
     checkEqual(BigInt(10) - BigInt(-10), "20");
     checkEqual(BigInt(-10) - BigInt(-10), "0");
-    
+
     checkEqual(BigInt(0) + BigInt(-1), "-1");
     checkEqual(BigInt(0) - BigInt(1), "-1");
-    
+
     checkEqual(BigInt(100) - BigInt(100), "0");
     checkEqual(BigInt(99) - BigInt(100), "-1");
-    
+
     const int64_t step = std::numeric_limits<uint32_t>::max() / 99;
     const int64_t lower = std::numeric_limits<int32_t>::min() + step;
     const int64_t upper = std::numeric_limits<int32_t>::max() - step;
@@ -112,7 +120,7 @@ int main()
             check(i, j);
         }
     }
-    
+
     const BigInt big1 = std::numeric_limits<int64_t>::max();
     checkEqual(big1, "9223372036854775808");
 
@@ -121,7 +129,7 @@ int main()
 
     const BigInt big3 = big2 - big1;
     checkEqual(big3, "9223372036854775808");
-    
+
     std::cout << "done\n";
 
     return 0;

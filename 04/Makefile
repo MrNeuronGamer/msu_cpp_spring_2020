@@ -1,6 +1,6 @@
 CC = g++
 STANDART = -std=c++14
 
-test: serializer.cpp test.cpp
-	$(CC) $(STANDART) -o test serializer.cpp test.cpp
+test: serializer.h test.cpp
+	$(CC) $(STANDART) -o test serializer.h test.cpp
 

@@ -1,12 +1,11 @@
 CC = g++
-STANDART = -std=c++17
+STANDART = -std=c++14
 
 
 
-test: test.o
-	$(CC) -o test test.o
 
-test.o: test.cpp vector.cpp
-	$(CC) $(STANDART) -c test.cpp vector.cpp
+
+test: test.cpp vector.h
+	$(CC) $(STANDART) -o test test.cpp vector.h
 
 

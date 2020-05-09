@@ -1,11 +1,12 @@
 CC = g++
 STANDART = -std=c++14
 
-test: bigint.o test.o
-		$(CC) $(STANDART) -O0 -o test bigint.o test.o
+test: test.o threadpool.o
+	$(CC) $(STANDART) -O0 -o test test.o threadpool.o
 
-bigint.o : bigint.cpp bigint.h
-	$(CC) $(STANDART) -O0 -c bigint.cpp
 
-test.o : test.cpp bigint.h
-	$(CC) $(STANDART) -O0 -c test.cpp
+test.o : test.cpp threadpool.o
+	$(CC) $(STANDART) -O0 -c test.cpp threadpool.o
+
+threadpool.o: threadpool.h threadpool.cpp
+	$(CC) $(STANDART) -O0 -c threadpool.h threadpool.cpp
